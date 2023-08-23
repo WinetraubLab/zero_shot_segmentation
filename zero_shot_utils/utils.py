@@ -20,6 +20,41 @@ from typing import List, Tuple, Union, Optional
 from dataclasses_json import dataclass_json
 from supervision import Detections
 
+def visualize_masks(masks):
+    boolean_masks = [
+      masks['segmentation']
+      for masks
+      in sorted(masks, key=lambda x: x['area'], reverse=True)
+  ]
+
+  sv.plot_images_grid(
+      images=boolean_masks,
+      grid_size=(len(masks), int(len(boolean_masks) / 4)),
+      size=(16, 16)
+  )
+
+def visualize_masks(im, masks, figsize):
+    plt.figure(figsize=FIG_SIZE)
+    plt.imshow(im)
+    show_anns(masks)
+    plt.axis('off')
+    plt.show()
+
+def show_anns(anns):
+
+  if len(anns) == 0:
+    return
+  sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)
+  ax = plt.gca()
+  ax.set_autoscale_on(False)
+
+  img = np.ones((sorted_anns[0]['segmentation'].shape[0], sorted_anns[0]['segmentation'].shape[1], 4))
+  img[:,:,3] = 0
+  for ann in sorted_anns:
+      m = ann['segmentation']
+      color_mask = np.concatenate([np.random.random(3), [0.35]])
+      img[m] = color_mask
+  ax.imshow(img)
 
 @dataclass_json
 @dataclass
