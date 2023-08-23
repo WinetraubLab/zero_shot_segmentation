@@ -1,3 +1,12 @@
+import numpy as np
+import torch
+import matplotlib.pyplot as plt
+import cv2
+from dataclasses import dataclass
+from typing import List, Tuple, Union, Optional
+from dataclasses_json import dataclass_json
+from supervision import Detections
+
 def score_masking(masks2, segmentation_mask):
     masks = sorted(masks2, key=lambda x: x['area'], reverse=True)
     mask0 = masks[0]['segmentation']
@@ -14,11 +23,6 @@ def score_masking(masks2, segmentation_mask):
 
 
 
-import numpy as np
-from dataclasses import dataclass
-from typing import List, Tuple, Union, Optional
-from dataclasses_json import dataclass_json
-from supervision import Detections
 
 def visualize_masks(masks):
     boolean_masks = [
