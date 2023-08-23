@@ -165,9 +165,8 @@ class COCOJsonUtility:
 def get_roboflow_data(dir):
     import os
     from roboflow import Roboflow
-    %cd rf_dir
     os.chdir(dir)
-    rf_dir = "/content/roboflow"    # rf
+    rf_dir = "/content/roboflow"
     rf_api_key = "R04BinsZcBZ6PsfKR2fP"
     rf_workspace = "yolab-kmmfx"
     rf_project = "zero-shot-oct"
