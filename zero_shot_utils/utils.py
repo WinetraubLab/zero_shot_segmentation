@@ -38,7 +38,7 @@ def visualize_masks(masks):
     )
 
 def visualize_masks(im, masks, figsize):
-    plt.figure(figsize=FIG_SIZE)
+    plt.figure(figsize=figsize)
     plt.imshow(im)
     show_anns(masks)
     plt.axis('off')
