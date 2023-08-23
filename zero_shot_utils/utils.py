@@ -22,16 +22,16 @@ from supervision import Detections
 
 def visualize_masks(masks):
     boolean_masks = [
-      masks['segmentation']
-      for masks
-      in sorted(masks, key=lambda x: x['area'], reverse=True)
-  ]
-
-  sv.plot_images_grid(
-      images=boolean_masks,
-      grid_size=(len(masks), int(len(boolean_masks) / 4)),
-      size=(16, 16)
-  )
+        masks['segmentation']
+        for masks
+        in sorted(masks, key=lambda x: x['area'], reverse=True)
+    ]
+    
+    sv.plot_images_grid(
+        images=boolean_masks,
+        grid_size=(len(masks), int(len(boolean_masks) / 4)),
+        size=(16, 16)
+    )
 
 def visualize_masks(im, masks, figsize):
     plt.figure(figsize=FIG_SIZE)
