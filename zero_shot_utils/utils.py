@@ -5,7 +5,9 @@ import cv2
 from dataclasses import dataclass
 from typing import List, Tuple, Union, Optional
 from dataclasses_json import dataclass_json
+import supervision as sv
 from supervision import Detections
+
 
 def score_masking(masks2, segmentation_mask):
     masks = sorted(masks2, key=lambda x: x['area'], reverse=True)
@@ -187,7 +189,6 @@ def get_roboflow_data(dir):
 
 
 def visualize_sam_masking():
-    import supervision as sv
     boolean_masks = [
         masks2['segmentation']
         for masks2
