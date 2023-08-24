@@ -37,7 +37,7 @@ def visualize_masks(masks):
         size=(16, 16)
     )
 
-def visualize_masks(im, masks, figsize):
+def visualize_masks_on_img(im, masks, figsize):
     plt.figure(figsize=figsize)
     plt.imshow(im)
     show_anns(masks)
