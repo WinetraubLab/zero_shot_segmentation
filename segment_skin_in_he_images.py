@@ -49,14 +49,42 @@ class SegmentSkinInHEImages:
     cy = int(moments['m01'] / moments['m00'])
 
     # From center of mass, go down and right, find the x and y of the points that are still in the tissue (i.e. not in dark area)
-    lowest_y = np.where(mask[:, cx])[0]
-    lowest_y = lowest_y[len(lowest_y)-1]
-    rightest_x = np.where(mask[cy, :])[0]
-    rightest_x = rightest_x[len(rightest_x)-1]
+    def go_down(pt,mask): # pt is [cx,cy]
+      cx = pt[0]
+      cy = pt[1]
+      lowest_y = np.where(mask[:, cx])[0]
+      lowest_y = lowest_y[len(lowest_y)-1]  
+      return [cx, lowest_y-2]
+    def go_up(pt,mask): # pt is [cx,cy]
+      cx = pt[0]
+      cy = pt[1]
+      highest_y = np.where(mask[:, cx])[0]
+      highest_y = highest_y[0]  
+      return [cx, highest_y+2]
+    def go_right(pt,mask): # pt is [cx,cy]
+      cx = pt[0]
+      cy = pt[1]
+      rightest_x = np.where(mask[cy, :])[0]
+      rightest_x = rightest_x[len(rightest_x)-1]
+      return [rightest_x-2, cy]
+    def go_left(pt,mask): # pt is [cx,cy]
+      cx = pt[0]
+      cy = pt[1]
+      left_x = np.where(mask[cy, :])[0]
+      left_x = rightest_x[0]
+      return [left_x+2, cy]
 
     # Finish up by creating the points to be used
-    points_array = np.array([[cx, cy], [cx, lowest_y-2], [rightest_x-2, cy], [cx, 1]])
-    points_label = np.array([1,1,1,0])
+    points_array = np.array([
+      [cx, cy], 
+      go_down([cx, cy], mask),
+      go_down(go_right([cx, cy], mask), mask),
+      go_down(go_left([cx, cy], mask), mask),
+      go_up([cx, cy], mask),
+      go_up(go_right([cx, cy], mask), mask),
+      go_up(go_left([cx, cy], mask), mask),
+      ])
+    points_label = np.array([1,1,1,1,0,0,0])
 
     return(points_array, points_label)
 
