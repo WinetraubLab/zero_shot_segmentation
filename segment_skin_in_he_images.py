@@ -22,7 +22,7 @@ class SegmentSkinInHEImages:
     self.predictor.set_image(he_image)
     masks, scores, logits = self.predictor.predict(
       point_coords=points_array,
-      point_labels=input_label,
+      point_labels=points_label,
       multimask_output=False,
       )
     mask = masks[0]
