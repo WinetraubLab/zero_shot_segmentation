@@ -71,7 +71,7 @@ class SegmentSkinInHEImages:
       cx = pt[0]
       cy = pt[1]
       left_x = np.where(mask[cy, :])[0]
-      left_x = rightest_x[0]
+      left_x = left_x[0]
       return [left_x+2, cy]
 
     # Finish up by creating the points to be used
