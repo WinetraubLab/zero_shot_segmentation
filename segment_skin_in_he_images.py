@@ -15,6 +15,8 @@ class SegmentSkinInHEImages:
   # Outputs:
   #  binary_mask - True - for every region that is skin, false otherwise
   def run_network(self, he_image, visualize_results=False):
+    # Downscale image since tissue is something big and thus 
+    
     # Find points of interest
     points_array, points_label = self._compute_points_of_interest(he_image)
     
@@ -50,26 +52,26 @@ class SegmentSkinInHEImages:
 
     # From center of mass, go down and right, find the x and y of the points that are still in the tissue (i.e. not in dark area)
     def go_down(pt,mask): # pt is [cx,cy]
-      cx = pt[0]
-      cy = pt[1]
+      cx = int(pt[0])
+      cy = int(pt[1])
       lowest_y = np.where(mask[:, cx])[0]
       lowest_y = lowest_y[len(lowest_y)-1]  
       return [cx, lowest_y-2]
     def go_up(pt,mask): # pt is [cx,cy]
-      cx = pt[0]
-      cy = pt[1]
+      cx = int(pt[0])
+      cy = int(pt[1])
       highest_y = np.where(mask[:, cx])[0]
       highest_y = highest_y[0]  
       return [cx, highest_y+2]
     def go_right(pt,mask): # pt is [cx,cy]
-      cx = pt[0]
-      cy = pt[1]
+      cx = int(pt[0])
+      cy = int(pt[1])
       rightest_x = np.where(mask[cy, :])[0]
       rightest_x = rightest_x[len(rightest_x)-1]
       return [rightest_x-2, cy]
     def go_left(pt,mask): # pt is [cx,cy]
-      cx = pt[0]
-      cy = pt[1]
+      cx = int(pt[0])
+      cy = int(pt[1])
       left_x = np.where(mask[cy, :])[0]
       left_x = left_x[0]
       return [left_x+2, cy]
@@ -81,10 +83,12 @@ class SegmentSkinInHEImages:
       go_down(go_right([cx, cy], mask), mask),
       go_down(go_left([cx, cy], mask), mask),
       go_up([cx, cy], mask),
+      go_up([cx+mask.shape[1]/4, cy], mask),
+      go_up([cx-mask.shape[1]/4, cy], mask),
       go_up(go_right([cx, cy], mask), mask),
       go_up(go_left([cx, cy], mask), mask),
       ])
-    points_label = np.array([1,1,1,1,0,0,0])
+    points_label = np.array([1,1,1,1,0,0,0,0,0])
 
     return(points_array, points_label)
 
