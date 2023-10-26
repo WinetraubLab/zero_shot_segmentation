@@ -8,13 +8,28 @@ class SegmentSkinInHEImages:
   def __init__(self, sam):
       self.predictor = SamPredictor(sam)
 
-  # This function evaluates the neural network on input image
+  # This function segments skin from gel.
+  # Inputs:
+  #  he_image - H&E image loaded in RGB (N by M by 3)
+  #  oct_image - if exists, utilize OCT for segmentation as it is more accurate
+  #  visualize_results - set to True to create a visualization of the results
+  # Outputs:
+  #  binary_mask - True - for every region that is skin, false otherwise
+  def segment_skin_from_gel(self, he_image, oct_image=None, visualize_results=False):
+    if oct_image is None:
+      # Run segmentation based on h&e
+      return self._segment_skin_from_gel_he(he_image, visualize_results)
+    else:
+      # Segment using OCT, not implemented yet
+      return None
+
+  # This function segments skin from gel using h&e image (without using OCT)
   # Inputs:
   #  he_image - H&E image loaded in RGB (N by M by 3)
   #  visualize_results - set to True to create a visualization of the results
   # Outputs:
   #  binary_mask - True - for every region that is skin, false otherwise
-  def run_network(self, he_image, visualize_results=False):
+  def _segment_skin_from_gel_he(self, he_image, visualize_results=False):
     # Downscale image since tissue is something big and thus 
     
     # Find points of interest
