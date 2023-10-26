@@ -23,7 +23,7 @@ class SegmentSkinInHEImages:
       return self._segment_skin_from_gel_he(he_image, visualize_results)
     else:
       # Segment using OCT
-      mask = segment_skin_in_oct_images..run_network(oct_image)
+      mask = segment_skin_in_oct_images.run_network(oct_image)
       if visualize_results:
         self._visualize_results(he_image, mask, [], [])
       return mask
