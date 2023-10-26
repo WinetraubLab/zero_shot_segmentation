@@ -30,13 +30,15 @@ class SegmentSkinInHEImages:
   # Outputs:
   #  binary_mask - True - for every region that is skin, false otherwise
   def _segment_skin_from_gel_he(self, he_image, visualize_results=False):
-    # Downscale image since tissue is something big and thus 
+    # Downscale image since tissue is something big and thus lower resultion is better
+    scaled_image = cv2.resize(he_image, (
+      int(he_image.shape[0]/4), int(he_image.shape[1]/4)))
     
     # Find points of interest
-    points_array, points_label = self._compute_points_of_interest(he_image)
+    points_array, points_label = self._compute_points_of_interest(scaled_image)
     
     # Do the SAM thing
-    self.predictor.set_image(he_image)
+    self.predictor.set_image(scaled_image)
     masks, scores, logits = self.predictor.predict(
       point_coords=points_array,
       point_labels=points_label,
@@ -44,9 +46,17 @@ class SegmentSkinInHEImages:
       )
     mask = masks[0]
 
+    # Scale mask & points up
+    mask = cv2.resize(mask.astype(np.float32), (he_image.shape[0], he_image.shape[1]))
+    mask = mask>0.5
+    points_array = points_array*4
+
+    # Make sure no black pixels are part of the mask
+    im_gray = cv2.cvtColor(he_image, cv2.COLOR_RGB2GRAY)
+    mask = mask*np.array(im_gray > 0)
+
     if visualize_results:
       self._visualize_results(he_image, mask, points_array, points_label)
-
     return mask
 
   # This function predicts points that are to be used for SAM
