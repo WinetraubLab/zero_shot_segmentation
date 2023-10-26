@@ -95,6 +95,8 @@ class SegmentSkinInHEImages:
   # This function visualizes results
   def _visualize_results(self, he_image, mask, points_array, points_label):
     def show_points(coords, labels, ax, marker_size=375):
+      if len(points_array) == 0:
+        return
       pos_points = coords[labels==1]
       neg_points = coords[labels==0]
       ax.scatter(pos_points[:, 0], pos_points[:, 1], color='green', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)
