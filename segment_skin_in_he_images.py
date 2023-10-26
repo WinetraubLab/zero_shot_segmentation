@@ -3,10 +3,12 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from segment_anything import sam_model_registry, SamPredictor
+import segment_skin_in_oct_images
 
 class SegmentSkinInHEImages:
   def __init__(self, sam):
       self.predictor = SamPredictor(sam)
+      segment_skin_in_oct_images.setup_network()
 
   # This function segments skin from gel.
   # Inputs:
@@ -20,8 +22,11 @@ class SegmentSkinInHEImages:
       # Run segmentation based on h&e
       return self._segment_skin_from_gel_he(he_image, visualize_results)
     else:
-      # Segment using OCT, not implemented yet
-      return None
+      # Segment using OCT
+      mask = segment_skin_in_oct_images..run_network(oct_image)
+      if visualize_results:
+        self._visualize_results(he_image, mask, [], [])
+      return mask
 
   # This function segments skin from gel using h&e image (without using OCT)
   # Inputs:
