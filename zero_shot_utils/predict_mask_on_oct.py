@@ -2,8 +2,8 @@
 import cv2
 import matplotlib.pyplot as plt
 
-from OCT2Hist_UseModel.utils.masking import get_sam_input_points, show_points, show_mask, mask_gel_and_low_signal
-from OCT2Hist_UseModel import oct2hist
+from utils.masking import get_sam_input_points, show_points, show_mask, mask_gel_and_low_signal
+import oct2hist
 
 def predict(oct_input_image_path, predictor):
     # Load OCT image
