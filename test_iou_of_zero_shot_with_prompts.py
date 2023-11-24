@@ -19,10 +19,10 @@ from tqdm import tqdm
 sys.path.append('/Users/dannybarash/Code/oct/OCT2Hist_UseModel')
 sys.path.append('/Users/dannybarash/Code/oct/')
 
-from OCT2Hist_UseModel.utils.masking import get_sam_input_points, show_points, show_mask, mask_gel_and_low_signal
+from OCT2Hist-ModelInference.utils.masking import get_sam_input_points, show_points, show_mask, mask_gel_and_low_signal
 
 
-from OCT2Hist_UseModel.utils.crop import crop
+from OCT2Hist-ModelInference.utils.crop import crop
 from zero_shot_utils.predict_mask_on_oct_interactive import predict
 
 # from google.colab import drive
