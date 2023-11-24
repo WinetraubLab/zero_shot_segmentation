@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from utils.crop import crop_oct
 from utils.masking import get_sam_input_points, show_points, show_mask, mask_gel_and_low_signal
-from OCT2Hist-ModelInference import oct2hist
+import oct2hist
 from zero_shot_utils.run_sam_gui import run_gui_segmentation
 
 
