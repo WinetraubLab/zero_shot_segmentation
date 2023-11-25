@@ -85,9 +85,9 @@ class Segmenter():
 
     def _on_key(self, event):
         if event.key == 'z':
-            if self.npoints<self.init_points:
-                self.npoints+=1
-                self.fig.suptitle(f'Segment Anything GUI: {self.npoints} points remain', fontsize=16)
+            #if self.npoints<self.init_points:
+            #    self.npoints+=1
+            #    self.fig.suptitle(f'Segment Anything GUI: {self.npoints} points remain', fontsize=16)
             self.undo()
 
 
@@ -112,11 +112,11 @@ class Segmenter():
             self.fig.canvas.draw()
 
     def _on_click(self, event):
-        if self.npoints > 0:
-            self.npoints -= 1
-            self.fig.suptitle(f'Segment Anything GUI: {self.npoints} points remain', fontsize=16)
-        else:
-            return
+        #if self.npoints > 0:
+        #    self.npoints -= 1
+        #    self.fig.suptitle(f'Segment Anything GUI: {self.npoints} points remain', fontsize=16)
+        #else:
+        #    return
         if event.inaxes != self.ax and (event.button in [1, 3]): return
         x = int(np.round(event.xdata))
         y = int(np.round(event.ydata))
@@ -241,4 +241,5 @@ class Segmenter():
 
 def run_gui_segmentation(img, weights_path):
     segmenter = run_gui(img, weights_path)
+    print("after sementer")
     return segmenter.global_masks
